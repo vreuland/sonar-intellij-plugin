@@ -7,6 +7,7 @@ import com.intellij.openapi.module.ModuleComponent;
 import org.jetbrains.annotations.NotNull;
 import org.sonar.ide.intellij.utils.SonarUtils;
 import org.sonar.wsclient.Sonar;
+import org.sonar.wsclient.SonarClient;
 
 @State(name = "SonarConfiguration", storages = {@Storage(id = "other", file = "$MODULE_FILE$")})
 public class SonarModuleComponentImpl implements SonarModuleComponent, ModuleComponent, PersistentStateComponent<SonarModuleComponent.SonarModuleState> {
@@ -54,8 +55,12 @@ public class SonarModuleComponentImpl implements SonarModuleComponent, ModuleCom
 
     @Override
     public Sonar getSonar() {
-        Sonar sonarConn = SonarUtils.getSonar(myState.host, myState.user, myState.password, myState.useProxy);
-        return sonarConn;
+        return SonarUtils.getSonar(myState.host, myState.user, myState.password, myState.useProxy);
+    }
+
+    @Override
+    public SonarClient getSonarClient() {
+        return SonarUtils.getSonarClient(myState.host, myState.user, myState.password, myState.useProxy);
     }
 
     @Override

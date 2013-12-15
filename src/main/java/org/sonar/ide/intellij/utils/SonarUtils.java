@@ -8,6 +8,7 @@ import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.sonar.wsclient.Host;
 import org.sonar.wsclient.Sonar;
+import org.sonar.wsclient.SonarClient;
 import org.sonar.wsclient.connectors.HttpClient4Connector;
 
 public class SonarUtils {
@@ -54,6 +55,18 @@ public class SonarUtils {
             httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
         }
         return new Sonar(connector);
+    }
+
+    public static SonarClient getSonarClient(String host, String user, String password, boolean useProxy) {
+        SonarClient.Builder builder = SonarClient.builder().url(host).login(user).password(password);
+        HttpConfigurable proxySettings = HttpConfigurable.getInstance();
+        if (useProxy && proxySettings.USE_HTTP_PROXY) {
+           builder = builder.proxy(proxySettings.PROXY_HOST, proxySettings.PROXY_PORT);
+            if(proxySettings.PROXY_AUTHENTICATION) {
+                builder = builder.proxyLogin(proxySettings.PROXY_LOGIN).proxyPassword(proxySettings.getPlainProxyPassword());
+            }
+        }
+        return builder.build();
     }
 
 }

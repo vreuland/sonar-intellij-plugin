@@ -75,6 +75,11 @@ public class SonarProjectComponentImpl implements SonarProjectComponent, Project
     }
 
     @Override
+    public Sonar getSonarClient() {
+        return getSonarClient();
+    }
+
+    @Override
     public SonarCache getSonarCache() {
         return sonarCache;
     }

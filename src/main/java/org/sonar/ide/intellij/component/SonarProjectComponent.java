@@ -22,5 +22,7 @@ public interface SonarProjectComponent {
 
     Sonar getSonar();
 
+    Sonar getSonarClient();
+
     SonarCache getSonarCache();
 }

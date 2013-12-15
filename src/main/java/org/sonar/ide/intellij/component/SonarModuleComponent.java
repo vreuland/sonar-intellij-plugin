@@ -1,6 +1,7 @@
 package org.sonar.ide.intellij.component;
 
 import org.sonar.wsclient.Sonar;
+import org.sonar.wsclient.SonarClient;
 
 public interface SonarModuleComponent {
     SonarModuleState getState();
@@ -17,4 +18,6 @@ public interface SonarModuleComponent {
     }
 
     Sonar getSonar();
+
+    SonarClient getSonarClient();
 }
